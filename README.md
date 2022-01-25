@@ -1,5 +1,5 @@
 # CigarTracer
-Automatically create Tracetables from existing Pythoncode
+Automatically create Tracetables for existing Pythoncode
 
 ## Status
 The CigarTracer-Project is at the moment still in development and therefore **NOT WORKING**
