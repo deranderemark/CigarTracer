@@ -13,9 +13,3 @@ them and completely switch to English.
 ## Tutorial
 Since the Software is still in development, I can't really give
 you helpfull information yet.
-
-*For further information, visit my website:*
-
-*https://marksteffes.de/nachhilfe/der-algorithmus-von-cigartracer-dem-tracetabellen-erstellungstool-erklaert/*
-
-*(password: mathemitstrom)*
