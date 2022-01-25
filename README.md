@@ -17,3 +17,5 @@ you helpfull information yet.
 *https://marksteffes.de/nachhilfe/der-algorithmus-von-cigartracer-dem-tracetabellen-erstellungstool-erklaert/*
 
 *(password: mathemitstrom)*
+
+Some Markdown text with <span style="color:blue">some *blue* text</span>
