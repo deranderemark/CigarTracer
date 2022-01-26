@@ -23,58 +23,55 @@ class CodeSmoker(object):
 
         return exec_output
 
+    # Liste für gefunde Variablen in importiertem Pythoncode
+    found_variables = []
+    found_whileloops = []
+    found_forloops = []
+    found_indentations = []
+
     # String aus import_python_file()-Funktion return-value manipulieren,
     # um Variablen zu tracen.
     def parse_code(self, userinput):
         # Zu tracende Variablen aus Userinput
         trace_vars = userinput.get().split(" ")
-        # Liste für gefunde Variablen in importiertem Pythoncode
-        found_variables = []
-        found_whileloops = []
-        found_indentations = []
 
-        # Jede Variable aus UserInput wird lokalisiert
+        # Lokalisieren aller Variablen
         for var in trace_vars:
-            found_variables.append(var) # Am Anfang der "Vorkommen" in Liste steht der Variablenbezeichner
-            # Da für jeden Buchstaben Iteriert wird, muss abgeglichen werden,
-            # ob man nicht schon wieder den selben Variablenbezeichner gefunden hat.
-            recent_val = None
-            for i in range(0, len(py_file), 1):
-                letter = py_file.find(var, i)
-
-                if (var in py_file) and self.no_duplicates_and_0(letter, recent_val):
-                    pos = [letter, letter + len(var)]
-                    found_variables.append(pos)
-                
-                    recent_val = letter
+             # Alle Variablen werden in die selbe Liste gespeichert, daher
+             # Trennung der Einträge durch die Variable selbst zu Beginn
+            self.found_variables.append(var)
+            self.string_finder(var, "found_variables") # Variablen
         
-        # Alle while-Loops werden lokalisiert
-        recent_val = None
+        # Lokalisieren von Schleifenkeywords, etc.
+        self.string_finder("while", "found_whileloops") # while
+        self.string_finder("for", "found_forloops") # for
+        self.string_finder("    ", "found_indentations") # "Einrückungen"
+
+        # Testing
+        print(self.found_variables)
+        print(self.found_whileloops)
+        print(self.found_forloops)
+        print(self.found_indentations)
+
+    def string_finder(self, string_to_search, listname):
+        found_list_names = {
+            "found_variables": self.found_variables,
+            "found_whileloops": self.found_whileloops,
+            "found_forloops": self.found_forloops,
+            "found_indentations": self.found_indentations
+        }
+
+        recent_val = None # Dient nur der Initialisierung
+
         for i in range(0, len(py_file), 1):
-            loops = py_file.find("while", i)
+            strings_to_search = py_file.find(string_to_search, i)
 
-            if ("while" in py_file) and self.no_duplicates_and_0(loops, recent_val):
-                pos = [loops, loops + len("while")]
-                found_whileloops.append(pos)
-                
-                recent_val = loops
-        
-        # Alle Einrückungen werden lokalisiert
-        for i in range(0, len(py_file), 1):
-            indent = "    "
-            indents = py_file.find(indent, i)
+            no_dublicates_n_0 = (strings_to_search != recent_val) and (strings_to_search >= 0)
+            if (string_to_search in py_file) and no_dublicates_n_0:
+                pos = [strings_to_search, strings_to_search + len(string_to_search)]
+                found_list_names[listname].append(pos)
 
-            if (indent in py_file) and indents >=0:
-                pos = [indents, indents + len(indent)]
-                found_indentations.append(pos)
-
-        # # Test
-        # print(found_variables)
-        # print(found_whileloops)
-        # print(found_indentations)
-
-    def no_duplicates_and_0(self, variable, recent_val):
-        return (variable != recent_val) and (variable >= 0)
+                recent_val = strings_to_search
 
 class Engine(object):
     def __init__(self):
@@ -116,7 +113,7 @@ class Engine(object):
         
         # Titel und Icon oben links
         root.title("CigarTracer")
-        root.iconbitmap('MonteCristo_Cigar.ico')
+        #root.iconbitmap('MonteCristo_Cigar.ico')
 
         # Dimensionen des Fensters, sowie Verhinderung dessen Manipulation
         root.geometry("600x200")

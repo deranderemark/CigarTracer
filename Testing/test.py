@@ -4,5 +4,5 @@ foo = None
 foo = 13
 a = 34
 
-while True:
+if True:
     print("Fuck You")
