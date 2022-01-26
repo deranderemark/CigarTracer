@@ -66,8 +66,8 @@ class CodeSmoker(object):
         for i in range(0, len(py_file), 1):
             strings_to_search = py_file.find(string_to_search, i)
 
-            no_dublicates_n_0 = (strings_to_search != recent_val) and (strings_to_search >= 0)
-            if (string_to_search in py_file) and no_dublicates_n_0:
+            no_dublicates_and_0 = (strings_to_search != recent_val) and (strings_to_search >= 0)
+            if (string_to_search in py_file) and no_dublicates_and_0:
                 pos = [strings_to_search, strings_to_search + len(string_to_search)]
                 found_list_names[listname].append(pos)
 
