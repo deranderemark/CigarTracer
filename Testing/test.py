@@ -4,5 +4,5 @@ foo = None
 foo = 13
 a = 34
 
-if True:
+if 22 > 2:
     print("Fuck You")
