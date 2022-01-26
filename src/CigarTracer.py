@@ -7,6 +7,7 @@ from tkinter import filedialog
 import matplotlib.pyplot as plt
 
 
+# Beinhaltet Algorithmus zur Ausgabe einer Tracetabelle
 class CodeSmoker(object):
     # Erhält als Parameter Liste mit allen Variablenwerten 
     # und entsprechendem SD und erstellt daraus eine matplotlib-Tabelle.
@@ -24,6 +25,9 @@ class CodeSmoker(object):
         return exec_output
 
     # Liste für gefunde Variablen in importiertem Pythoncode
+    # War ursprünglich innerhalb von parse_code()-Funktion, 
+    # jedoch Änderung wegen Implementierung von 
+    # string_finder()-Funktion.
     found_variables = []
     found_whileloops = []
     found_forloops = []
@@ -63,16 +67,25 @@ class CodeSmoker(object):
 
         recent_val = None # Dient nur der Initialisierung
 
+        # Es wird über alle char in py_file iteriert, sonst
+        # wird 2. vorkommen von .find()-Funktion ignoriert/nicht gefunden.
         for i in range(0, len(py_file), 1):
+            # Suchen eins Strings in py_file; i ist tail-pos
             strings_to_search = py_file.find(string_to_search, i)
 
+            # Falls gewünscht wird die gefundene Position in die entsprechende
+            # Liste ("siehe listname Param + dictionary") geschrieben
             no_dublicates_and_0 = (strings_to_search != recent_val) and (strings_to_search >= 0)
             if (string_to_search in py_file) and no_dublicates_and_0:
                 pos = [strings_to_search, strings_to_search + len(string_to_search)]
                 found_list_names[listname].append(pos)
 
+                # Hilft beim Vermeiden doppelter Einträge von Variablenpositionen,
+                # die sonst auftreten, da eben über jeden char als pos für den
+                # tail iteriert wird
                 recent_val = strings_to_search
 
+# Hält das Programm am Leben
 class Engine(object):
     def __init__(self):
         get_trace_vars = None
@@ -88,6 +101,7 @@ class Engine(object):
     def start_smoking(self):
         code_smoker = CodeSmoker()
 
+        # # Errormanegmentsystem (während Debugging AUSKOMMENTIEREN, sonst Syntaxfehler nicht klar!)
         # try:
         code_smoker.parse_code(self.get_trace_vars)
         code_smoker.create_tracetable(code_smoker.smoke_code())
@@ -113,14 +127,17 @@ class Engine(object):
         
         # Titel und Icon oben links
         root.title("CigarTracer")
-        #root.iconbitmap('MonteCristo_Cigar.ico')
 
-        # Dimensionen des Fensters, sowie Verhinderung dessen Manipulation
+        # Dimensionen des Fensters
         root.geometry("600x200")
+        # Verhindern von windowresizing durch Nutzer
         root.minsize(width=600, height=200)
         root.maxsize(width=600, height=200)
 
-        # UI-Elemente BEGINN
+        # ----------------------------------------------------------------------------------
+        # UI-Elemente BEGINN 
+        # ----------------------------------------------------------------------------------
+
         welcome_txt = tk.Label(root, text="Willkommen beim CigarTracer", )
         welcome_txt.pack()
 
@@ -142,7 +159,10 @@ class Engine(object):
 
         exit_button = ttk.Button(root, text="Verlassen", command=root.quit)
         exit_button.pack()
-        # UI-Elemente ENDE
+
+        # ----------------------------------------------------------------------------------
+        # UI-Elemente ENDE 
+        # ----------------------------------------------------------------------------------
 
         root.mainloop()
 
