@@ -1,22 +1,27 @@
+# Tkinter für GUI
 import tkinter as tk
 from tkinter import Entry, ttk
 from tkinter import filedialog
 
+# Matplotlib für Datenausgabe als Tabelle
 import matplotlib.pyplot as plt
 
 
 class CodeSmoker(object):
-    # Konvertiert manipulierten String zu matplotlib-Tabelle
-    def output_tracetable(self):
-        # # Daten in Tabelle verfrachten
+    # Erhält als Parameter Liste mit allen Variablenwerten 
+    # und entsprechendem SD und erstellt daraus eine matplotlib-Tabelle.
+    def create_tracetable(self, varlist):
         # plt.show()
         pass
 
-    # Manipulation von py_file
-    def create_execString(self):
-        # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        pass
+    # Manipulation von py_file und anschließende Ausführung
+    # mittels der exec(String)-Funktion.
+    def smoke_code(self):
+        exec_output = []
 
+        # [...]
+
+        return exec_output
 
     # String aus import_python_file()-Funktion return-value manipulieren,
     # um Variablen zu tracen.
@@ -88,8 +93,7 @@ class Engine(object):
 
         # try:
         code_smoker.parse_code(self.get_trace_vars)
-        code_smoker.create_execString()
-        code_smoker.output_tracetable()
+        code_smoker.create_tracetable(code_smoker.smoke_code())
         # except:
         #     self.error_handler()
 
