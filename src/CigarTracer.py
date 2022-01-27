@@ -44,12 +44,12 @@ class CodeSmoker(object):
              # Alle Variablen werden in die selbe Liste gespeichert, daher
              # Trennung der Einträge durch die Variable selbst zu Beginn
             self.found_variables.append(var)
-            self.string_finder(var, "found_variables") # Variablen
+            self.strings_finder(var, "found_variables") # Variablen
         
         # Lokalisieren von Schleifenkeywords, etc.
-        self.string_finder("while", "found_whileloops") # while
-        self.string_finder("for", "found_forloops") # for
-        self.string_finder("    ", "found_indentations") # "Einrückungen"
+        self.strings_finder("while", "found_whileloops") # while
+        self.strings_finder("for", "found_forloops") # for
+        self.strings_finder("    ", "found_indentations") # "Einrückungen"
 
         # Testing
         print(self.found_variables)
@@ -57,7 +57,7 @@ class CodeSmoker(object):
         print(self.found_forloops)
         print(self.found_indentations)
 
-    def string_finder(self, string_to_search, listname):
+    def strings_finder(self, string_to_search, listname):
         found_list_names = {
             "found_variables": self.found_variables,
             "found_whileloops": self.found_whileloops,
