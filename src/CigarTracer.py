@@ -22,10 +22,12 @@ class CodeSmoker(object):
     # Erhält als Parameter Liste mit allen Variablenwerten 
     # und entsprechendem SD und erstellt daraus eine matplotlib-Tabelle.
     def create_tracetable(self, varlist):
-        # Diesen Teil schreibe ich erst, wenn ich überhaupt
+        # Diesen Teil schreibe ich erst, wenn ich:
         #   a) weiß in welcher Form ich die Variablenwerte aus
         #      smoke_code erhalte
         #   b) den Algorithmus für smoke_code fertiggestellt habe.
+        #
+        # Als Inspiration dient mir dabei: https://statologie.de/tabelle-matplotlib/
         
         # plt.show()
         pass
