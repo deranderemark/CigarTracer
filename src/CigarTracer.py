@@ -9,9 +9,24 @@ import matplotlib.pyplot as plt
 
 # Beinhaltet Algorithmus zur Ausgabe einer Tracetabelle
 class CodeSmoker(object):
+    def __init__(self):
+        # Liste für gefunde Variablen in importiertem Pythoncode
+        # War ursprünglich innerhalb von parse_code()-Funktion, 
+        # jedoch Änderung wegen Implementierung von 
+        # string_finder()-Funktion.
+        found_variables = []
+        found_whileloops = []
+        found_forloops = []
+        found_indentations = []
+
     # Erhält als Parameter Liste mit allen Variablenwerten 
     # und entsprechendem SD und erstellt daraus eine matplotlib-Tabelle.
     def create_tracetable(self, varlist):
+        # Diesen Teil schreibe ich erst, wenn ich überhaupt
+        #   a) weiß in welcher Form ich die Variablenwerte aus
+        #      smoke_code erhalte
+        #   b) den Algorithmus für smoke_code fertiggestellt habe.
+        
         # plt.show()
         pass
 
@@ -20,18 +35,13 @@ class CodeSmoker(object):
     def smoke_code(self):
         exec_output = []
 
-        # [...]
+        # Aktuelle Baustelle, ich bin gerade noch in der Konzeption
+        # des passenden Algorithmus. 
+        # 
+        # Also hier gerne Vorschläge her,
+        # ich schaue mir alle pull-requests an!
 
         return exec_output
-
-    # Liste für gefunde Variablen in importiertem Pythoncode
-    # War ursprünglich innerhalb von parse_code()-Funktion, 
-    # jedoch Änderung wegen Implementierung von 
-    # string_finder()-Funktion.
-    found_variables = []
-    found_whileloops = []
-    found_forloops = []
-    found_indentations = []
 
     # String aus import_python_file()-Funktion return-value manipulieren,
     # um Variablen zu tracen.
@@ -51,13 +61,15 @@ class CodeSmoker(object):
         self.string_finder("for", "found_forloops") # for
         self.string_finder("    ", "found_indentations") # "Einrückungen"
 
-        # Testing
-        print(self.found_variables)
-        print(self.found_whileloops)
-        print(self.found_forloops)
-        print(self.found_indentations)
+        # # Testing
+        # print(self.found_variables)
+        # print(self.found_whileloops)
+        # print(self.found_forloops)
+        # print(self.found_indentations)
 
     def string_finder(self, string_to_search, listname):
+        # Damit man auf die Listen, die in der __init__()-Funktion
+        # initialisiert werden zugreifen kann.
         found_list_names = {
             "found_variables": self.found_variables,
             "found_whileloops": self.found_whileloops,
@@ -122,6 +134,10 @@ class Engine(object):
         confirm_message.pack()
 
     # tkinter Fenster dient als Backbone
+    #
+    # An dieser Stelle die herzliche Einladung an alle, die mehr Erfahrung mit GUIs haben,
+    # das hier ist, wie man wahrscheinlich unschwer erkennen kann meine 
+    # Erste... :-)
     def gui(self):
         global root; root = tk.Tk()
         
