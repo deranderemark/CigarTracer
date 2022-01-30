@@ -5,7 +5,7 @@ Automatically create Tracetables for existing Pythoncode without any hustle!
 **NOT WORKING**
 
 The CigarTracer-Project is still in development.
-It may be available on Sunday, the 30th January 2022.
+The project delays further due to underestemated temporal expenditure. I am very sorry! :-(
 
 Currently, the comments inside the python files are only available in german. I may translate
 them and completely switch to English.
