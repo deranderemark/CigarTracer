@@ -83,21 +83,22 @@ class CodeSmoker(object):
 
         # Es wird über alle char in py_file iteriert, sonst
         # wird 2. vorkommen von .find()-Funktion ignoriert/nicht gefunden.
-        for i in range(0, len(engine.py_file), 1):
-            # Suchen eins Strings in py_file; i ist tail-pos
-            strings_to_search = engine.py_file.find(string_to_search, i)
+        for i in range(0, engine.py_file, 1):
+            for n in range(0, len(engine.py_file[i]), 1):
+                # Suchen eins Strings in py_file; i ist tail-pos
+                strings_to_search = engine.py_file[i].find(string_to_search, i)
 
-            # Falls gewünscht wird die gefundene Position in die entsprechende
-            # Liste ("siehe listname Param + dictionary") geschrieben
-            no_dublicates_and_0 = (strings_to_search != recent_val) and (strings_to_search >= 0)
-            if (string_to_search in engine.py_file) and no_dublicates_and_0:
-                pos = [strings_to_search, strings_to_search + len(string_to_search)]
-                found_list_names[listname].append(pos)
+                # Falls gewünscht wird die gefundene Position in die entsprechende
+                # Liste ("siehe listname Param + dictionary") geschrieben
+                no_dublicates_and_0 = (strings_to_search != recent_val) and (strings_to_search >= 0)
+                if (string_to_search in engine.py_file) and no_dublicates_and_0:
+                    pos = [n, strings_to_search, strings_to_search + len(string_to_search)]
+                    found_list_names[listname].append(pos)
 
-                # Hilft beim Vermeiden doppelter Einträge von Variablenpositionen,
-                # die sonst auftreten, da eben über jeden char als pos für den
-                # tail iteriert wird
-                recent_val = strings_to_search
+                    # Hilft beim Vermeiden doppelter Einträge von Variablenpositionen,
+                    # die sonst auftreten, da eben über jeden char als pos für den
+                    # tail iteriert wird
+                    recent_val = strings_to_search
 
 # Hält das Programm am Leben
 class Engine(object):
