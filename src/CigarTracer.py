@@ -69,7 +69,7 @@ class CodeSmoker(object):
         print(self.found_forloops)
         print(self.found_indentations)
 
-    def strings_finder(self, string_to_search, listname):
+    def strings_finder(self, searched_string, listname):
         # Damit man auf die Listen, die in der __init__()-Funktion
         # initialisiert werden zugreifen kann.
         found_list_names = {
@@ -82,12 +82,12 @@ class CodeSmoker(object):
         # Es wird über Objekte aus Liste von Zeilen
         line_number = 1 # Für Zeilen angabe in found_listen
         for line in engine.py_file:
-            strings_to_search = line.find(string_to_search)
+            searched_strings = line.find(searched_string)
 
             # Zeilennummer und Position (Tail, Head) wird in die entsprechende
             # Liste ("siehe listname Param + dictionary") geschrieben
-            if (string_to_search in line) and (strings_to_search >= 0):
-                pos = [line_number, strings_to_search, strings_to_search + len(string_to_search)]
+            if (searched_string in line) and (searched_strings >= 0):
+                pos = [line_number, searched_strings, searched_strings + len(searched_string)]
                 found_list_names[listname].append(pos)
                 
             line_number += 1
