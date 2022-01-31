@@ -110,7 +110,7 @@ class Engine(object):
     def import_python_file(self):
         try:
             # Datei wird als String in CigarTracer importiert
-            self.py_file = filedialog.askopenfile(parent=self.window, title="Pythondatei für den Trace auswählen...").read()
+            self.py_file = filedialog.askopenfile(parent=self.window, title="Pythondatei für den Trace auswählen...").readlines()
         except:
             self.error_handler()
 
