@@ -83,14 +83,14 @@ class CodeSmoker(object):
 
         # Es wird über alle char in py_file iteriert, sonst
         # wird 2. vorkommen von .find()-Funktion ignoriert/nicht gefunden.
-        for i in range(0, len(py_file), 1):
+        for i in range(0, len(engine.py_file), 1):
             # Suchen eins Strings in py_file; i ist tail-pos
-            strings_to_search = py_file.find(string_to_search, i)
+            strings_to_search = engine.py_file.find(string_to_search, i)
 
             # Falls gewünscht wird die gefundene Position in die entsprechende
             # Liste ("siehe listname Param + dictionary") geschrieben
             no_dublicates_and_0 = (strings_to_search != recent_val) and (strings_to_search >= 0)
-            if (string_to_search in py_file) and no_dublicates_and_0:
+            if (string_to_search in engine.py_file) and no_dublicates_and_0:
                 pos = [strings_to_search, strings_to_search + len(string_to_search)]
                 found_list_names[listname].append(pos)
 
@@ -102,13 +102,15 @@ class CodeSmoker(object):
 # Hält das Programm am Leben
 class Engine(object):
     def __init__(self):
+        py_file = None
+        window = None
         get_trace_vars = None
 
     # Import von Python-Dateien und speichern in String
     def import_python_file(self):
         try:
             # Datei wird als String in CigarTracer importiert
-            global py_file; py_file = filedialog.askopenfile(parent=root, title="Pythondatei für den Trace auswählen...").read()
+            self.py_file = filedialog.askopenfile(parent=self.window, title="Pythondatei für den Trace auswählen...").read()
         except:
             self.error_handler()
 
@@ -131,7 +133,7 @@ class Engine(object):
         skipped_filedialog = tk.Message(error_handler, text="Es ist ein Fehler aufgetreten!", fg= "red")
         skipped_filedialog.pack()
         
-        confirm_message = ttk.Button(error_handler, text="Ok", command=root.quit)
+        confirm_message = ttk.Button(error_handler, text="Ok", command=self.window.quit)
         confirm_message.pack()
 
     # tkinter Fenster dient als Backbone
@@ -140,48 +142,48 @@ class Engine(object):
     # das hier ist, wie man wahrscheinlich unschwer erkennen kann meine 
     # Erste... :-)
     def gui(self):
-        global root; root = tk.Tk()
+        self.window = tk.Tk()
         
         # Titel und Icon oben links
-        root.title("CigarTracer")
+        self.window.title("CigarTracer")
 
         # Dimensionen des Fensters
-        root.geometry("600x200")
+        self.window.geometry("600x200")
         # Verhindern von windowresizing durch Nutzer
-        root.minsize(width=600, height=200)
-        root.maxsize(width=600, height=200)
+        self.window.minsize(width=600, height=200)
+        self.window.maxsize(width=600, height=200)
 
         # ----------------------------------------------------------------------------------
         # UI-Elemente BEGINN 
         # ----------------------------------------------------------------------------------
 
-        welcome_txt = tk.Label(root, text="Willkommen beim CigarTracer", )
+        welcome_txt = tk.Label(self.window, text="Willkommen beim CigarTracer", )
         welcome_txt.pack()
 
-        by_ms = tk.Label(root, text="by Mark Steffes")
+        by_ms = tk.Label(self.window, text="by Mark Steffes")
         by_ms.pack()
 
         # Filedialog
-        choose_file_to_trace = ttk.Button(root, text="Pythondatei für Trace auswählen...", padding=10, command=self.import_python_file)
+        choose_file_to_trace = ttk.Button(self.window, text="Pythondatei für Trace auswählen...", padding=10, command=self.import_python_file)
         choose_file_to_trace.pack()
 
         # Zu tracende Variablen übergeben
-        get_trace_vars_label = ttk.Label(root, text="Variablenbezeichner durch LEERZEICHEN getrennt auflisten: \"variable1 variable2 variable3 [...]\".")
+        get_trace_vars_label = ttk.Label(self.window, text="Variablenbezeichner durch LEERZEICHEN getrennt auflisten: \"variable1 variable2 variable3 [...]\".")
         get_trace_vars_label.pack()
-        self.get_trace_vars =  Entry(root)
+        self.get_trace_vars =  Entry(self.window)
         self.get_trace_vars.pack()
 
-        trace_button = ttk.Button(root, text="Trace the code motherfucker!", command=self.start_smoking)
+        trace_button = ttk.Button(self.window, text="Trace the code motherfucker!", command=self.start_smoking)
         trace_button.pack()
 
-        exit_button = ttk.Button(root, text="Verlassen", command=root.quit)
+        exit_button = ttk.Button(self.window, text="Verlassen", command=self.window.quit)
         exit_button.pack()
 
         # ----------------------------------------------------------------------------------
         # UI-Elemente ENDE 
         # ----------------------------------------------------------------------------------
 
-        root.mainloop()
+        self.window.mainloop()
 
 
 engine = Engine()
