@@ -83,7 +83,7 @@ class CodeSmoker(object):
         # wird 2. vorkommen von .find()-Funktion ignoriert/nicht gefunden.
         line_number = 1
         for line in engine.py_file:
-            for n in range(0, len(line), 1):
+            for char in range(0, len(line), 1):
                 # Suchen eins Strings in py_file; i ist tail-pos
                 strings_to_search = line.find(string_to_search)
 
@@ -92,7 +92,7 @@ class CodeSmoker(object):
                 if (string_to_search in line) and strings_to_search >= 0:
                     pos = [line_number, strings_to_search, strings_to_search + len(string_to_search)]
                     found_list_names[listname].append(pos)
-            
+                    
             line_number += 1
 
 # Hält das Programm am Leben
