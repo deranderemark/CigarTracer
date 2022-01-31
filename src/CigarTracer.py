@@ -10,10 +10,6 @@ import matplotlib.pyplot as plt
 # Beinhaltet Algorithmus zur Ausgabe einer Tracetabelle
 class CodeSmoker(object):
     def __init__(self):
-        # Liste für gefunde Variablen in importiertem Pythoncode
-        # War ursprünglich innerhalb von parse_code()-Funktion, 
-        # jedoch Änderung wegen Implementierung von 
-        # string_finder()-Funktion.
         self.found_variables = []
         self.found_whileloops = []
         self.found_forloops = []
