@@ -89,8 +89,7 @@ class CodeSmoker(object):
 
                 # Falls gewünscht wird die gefundene Position in die entsprechende
                 # Liste ("siehe listname Param + dictionary") geschrieben
-                no_dublicates_and_0 = (strings_to_search != recent_val) and (strings_to_search >= 0)
-                if (string_to_search in line) and no_dublicates_and_0:
+                if (string_to_search in line) and strings_to_search >= 0:
                     pos = [line_number, strings_to_search, strings_to_search + len(string_to_search)]
                     found_list_names[listname].append(pos)
             
