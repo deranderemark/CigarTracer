@@ -127,7 +127,6 @@ class Engine(object):
         error_handler = tk.Tk()
 
         error_handler.title("ERROR")
-        error_handler.iconbitmap('MonteCristo_Cigar.ico')
 
         skipped_filedialog = tk.Message(error_handler, text="Es ist ein Fehler aufgetreten!", fg= "red")
         skipped_filedialog.pack()
