@@ -14,10 +14,10 @@ class CodeSmoker(object):
         # War ursprünglich innerhalb von parse_code()-Funktion, 
         # jedoch Änderung wegen Implementierung von 
         # string_finder()-Funktion.
-        found_variables = []
-        found_whileloops = []
-        found_forloops = []
-        found_indentations = []
+        self.found_variables = []
+        self.found_whileloops = []
+        self.found_forloops = []
+        self.found_indentations = []
 
     # Erhält als Parameter Liste mit allen Variablenwerten 
     # und entsprechendem SD und erstellt daraus eine matplotlib-Tabelle.
@@ -63,13 +63,13 @@ class CodeSmoker(object):
         self.strings_finder("for", "found_forloops") # for
         self.strings_finder("    ", "found_indentations") # "Einrückungen"
 
-        # # Testing
-        # print(self.found_variables)
-        # print(self.found_whileloops)
-        # print(self.found_forloops)
-        # print(self.found_indentations)
+        # Testing
+        print(self.found_variables)
+        print(self.found_whileloops)
+        print(self.found_forloops)
+        print(self.found_indentations)
 
-    def string_finder(self, string_to_search, listname):
+    def strings_finder(self, string_to_search, listname):
         # Damit man auf die Listen, die in der __init__()-Funktion
         # initialisiert werden zugreifen kann.
         found_list_names = {
@@ -79,33 +79,29 @@ class CodeSmoker(object):
             "found_indentations": self.found_indentations
         }
 
-        recent_val = None # Dient nur der Initialisierung
-
         # Es wird über alle char in py_file iteriert, sonst
         # wird 2. vorkommen von .find()-Funktion ignoriert/nicht gefunden.
-        for i in range(0, engine.py_file, 1):
-            for n in range(0, len(engine.py_file[i]), 1):
+        line_number = 1
+        for line in engine.py_file:
+            for n in range(0, len(line), 1):
                 # Suchen eins Strings in py_file; i ist tail-pos
-                strings_to_search = engine.py_file[i].find(string_to_search, i)
+                strings_to_search = line.find(string_to_search)
 
                 # Falls gewünscht wird die gefundene Position in die entsprechende
                 # Liste ("siehe listname Param + dictionary") geschrieben
                 no_dublicates_and_0 = (strings_to_search != recent_val) and (strings_to_search >= 0)
-                if (string_to_search in engine.py_file) and no_dublicates_and_0:
-                    pos = [n, strings_to_search, strings_to_search + len(string_to_search)]
+                if (string_to_search in line) and no_dublicates_and_0:
+                    pos = [line_number, strings_to_search, strings_to_search + len(string_to_search)]
                     found_list_names[listname].append(pos)
-
-                    # Hilft beim Vermeiden doppelter Einträge von Variablenpositionen,
-                    # die sonst auftreten, da eben über jeden char als pos für den
-                    # tail iteriert wird
-                    recent_val = strings_to_search
+            
+            line_number += 1
 
 # Hält das Programm am Leben
 class Engine(object):
     def __init__(self):
-        py_file = None
-        window = None
-        get_trace_vars = None
+        self.py_file = None
+        self.window = None
+        self.get_trace_vars = None
 
     # Import von Python-Dateien und speichern in String
     def import_python_file(self):
