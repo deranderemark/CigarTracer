@@ -79,20 +79,17 @@ class CodeSmoker(object):
             "found_indentations": self.found_indentations
         }
 
-        # Es wird über alle char in py_file iteriert, sonst
-        # wird 2. vorkommen von .find()-Funktion ignoriert/nicht gefunden.
-        line_number = 1
+        # Es wird über Objekte aus Liste von Zeilen
+        line_number = 1 # Für Zeilen angabe in found_listen
         for line in engine.py_file:
-            for char in range(0, len(line), 1):
-                # Suchen eins Strings in py_file; i ist tail-pos
-                strings_to_search = line.find(string_to_search)
+            strings_to_search = line.find(string_to_search)
 
-                # Falls gewünscht wird die gefundene Position in die entsprechende
-                # Liste ("siehe listname Param + dictionary") geschrieben
-                if (string_to_search in line) and strings_to_search >= 0:
-                    pos = [line_number, strings_to_search, strings_to_search + len(string_to_search)]
-                    found_list_names[listname].append(pos)
-                    
+            # Zeilennummer und Position (Tail, Head) wird in die entsprechende
+            # Liste ("siehe listname Param + dictionary") geschrieben
+            if (string_to_search in line) and (strings_to_search >= 0):
+                pos = [line_number, strings_to_search, strings_to_search + len(string_to_search)]
+                found_list_names[listname].append(pos)
+                
             line_number += 1
 
 class Engine(object):
