@@ -95,7 +95,6 @@ class CodeSmoker(object):
                     
             line_number += 1
 
-# Hält das Programm am Leben
 class Engine(object):
     def __init__(self):
         self.py_file = None
