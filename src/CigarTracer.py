@@ -63,11 +63,11 @@ class CodeSmoker(object):
         self.strings_finder("for", "found_forloops") # for
         self.strings_finder("    ", "found_indentations") # "Einrückungen"
 
-        # Testing
-        print(self.found_variables)
-        print(self.found_whileloops)
-        print(self.found_forloops)
-        print(self.found_indentations)
+        # # Testing
+        # print(self.found_variables)
+        # print(self.found_whileloops)
+        # print(self.found_forloops)
+        # print(self.found_indentations)
 
     def strings_finder(self, searched_string, listname):
         # Damit man auf die Listen, die in der __init__()-Funktion
