@@ -5,11 +5,11 @@ Automatically create Tracetables for existing Pythoncode without any hustle!
 **NOT WORKING**
 
 The CigarTracer-Project is still in development.
-The project delays further due to underestemated temporal expenditure. I am very sorry! :-(
-**Estimated release date: 6th January 2022**
+Currently, I am writing the algorythm to manipulate the original string so it includes python code
+to store the current state of a variable, as well as its "SD"-val which has also to be tracked by
+another code I have to include into the smoke_code()-function.
 
-Currently, the comments inside the python files are only available in german. I may translate
-them and completely switch to English.
+**Estimated release date: 6th January 2022**
 
 # Tutorial
 Since the Software is still in development, I can't really give
