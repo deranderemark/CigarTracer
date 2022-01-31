@@ -4,5 +4,5 @@ foo = None
 foo = 13
 a = 34
 
-if 22 > 2:
+while 4 != 8:
     print("I like you.")
