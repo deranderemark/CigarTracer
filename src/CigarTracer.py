@@ -1,4 +1,5 @@
 # Tkinter für GUI
+import string
 import tkinter as tk
 from tkinter import Entry, ttk
 from tkinter import filedialog
@@ -11,9 +12,23 @@ import matplotlib.pyplot as plt
 class CodeSmoker(object):
     def __init__(self):
         self.found_variables = []
+        self.trace_vars = None
+
         self.found_whileloops = []
         self.found_forloops = []
         self.found_indentations = []
+
+        self.loops = [
+            self.found_whileloops,
+            self.found_forloops
+        ]
+
+        self.all_lists = [
+            self.found_variables,
+            self.found_whileloops,
+            self.found_forloops,
+            self.found_indentations
+        ]
 
     # Erhält als Parameter Liste mit allen Variablenwerten 
     # und entsprechendem SD und erstellt daraus eine matplotlib-Tabelle.
@@ -28,16 +43,38 @@ class CodeSmoker(object):
         # plt.show()
         pass
 
-    # Manipulation von py_file und anschließende Ausführung
+    # Manipulation von py_file.readlines() und anschließende Ausführung
     # mittels der exec(String)-Funktion.
     def smoke_code(self):
         exec_output = []
 
-        # Aktuelle Baustelle, ich bin gerade noch in der Konzeption
-        # des passenden Algorithmus. 
-        # 
-        # Also hier gerne Vorschläge her,
-        # ich schaue mir alle pull-requests an!
+        for lists in self.loops:
+            for item in lists:
+                position = item[0]
+
+                ans = "pass"
+                for indent in self.found_indentations:
+                    if ans!= "pass":
+                        only_next_indent = (indent[0] - ans) == 1
+                    else:
+                        only_next_indent = False
+
+                    if (indent[0] > position and only_next_indent) or ans == "pass":
+                        ans = indent[0]
+
+                counter = 0
+                for var in self.trace_vars:
+                    statement = "    " + str(var) + "_list.append(" + str(var) + ")"
+                    self.py_file.readlines().insert(ans + 1 + counter, statement)
+                    
+                    for thing in self.all_lists:
+                        for y in thing:
+                            for x in y:
+                                x[0] += 1
+
+                    counter += 1
+        
+        exec_output = exec(self.py_file)
 
         return exec_output
 
@@ -45,10 +82,10 @@ class CodeSmoker(object):
     # um Variablen zu tracen.
     def parse_code(self, userinput):
         # Zu tracende Variablen aus Userinput
-        trace_vars = userinput.get().split(" ")
+        self.trace_vars = userinput.get().split(" ")
 
         # Lokalisieren aller Variablen
-        for var in trace_vars:
+        for var in self.trace_vars:
              # Alle Variablen werden in die selbe Liste gespeichert, daher
              # Trennung der Einträge durch die Variable selbst zu Beginn
             self.found_variables.append(var)
@@ -59,7 +96,7 @@ class CodeSmoker(object):
         self.strings_finder("for", "found_forloops") # for
         self.strings_finder("    ", "found_indentations") # "Einrückungen"
 
-        # # Testing
+        # # Debuging
         # print(self.found_variables)
         # print(self.found_whileloops)
         # print(self.found_forloops)
@@ -77,7 +114,7 @@ class CodeSmoker(object):
 
         # Es wird über Objekte aus Liste von Zeilen
         line_number = 1 # Für Zeilen angabe in found_listen
-        for line in engine.py_file:
+        for line in engine.py_file.readlines():
             searched_strings = line.find(searched_string)
 
             # Zeilennummer und Position (Tail, Head) wird in die entsprechende
@@ -90,7 +127,7 @@ class CodeSmoker(object):
 
 class Engine(object):
     def __init__(self):
-        self.py_file = None
+        global py_file; self.py_file = None
         self.window = None
         self.get_trace_vars = None
 
@@ -98,7 +135,7 @@ class Engine(object):
     def import_python_file(self):
         try:
             # Datei wird als String in CigarTracer importiert
-            self.py_file = filedialog.askopenfile(parent=self.window, title="Pythondatei für den Trace auswählen...").readlines()
+            self.py_file = filedialog.askopenfile(parent=self.window, title="Pythondatei für den Trace auswählen...")
         except:
             self.error_handler()
 
