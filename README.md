@@ -12,7 +12,7 @@ another code I have to include into the smoke_code()-function. I think I will ne
 of work to complete the program until I can release an alpha version, about one more week for a
 beta version which will eventually become perpetual.
 
-**Estimated release date: 6th January 2022**
+**Estimated release date: 13th January 2022**
 
 # Tutorial
 Since the Software is still in development, I can't really give
