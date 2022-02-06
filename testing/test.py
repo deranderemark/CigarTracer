@@ -9,3 +9,5 @@ while 4 != 8:
     # Aha
 
 pass
+if True:
+    print("I don't like you.")
