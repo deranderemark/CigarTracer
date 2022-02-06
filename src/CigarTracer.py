@@ -23,6 +23,13 @@ class CodeSmoker(object):
             self.found_forloops
         ]
 
+        self.all_lists = [
+            self.found_variables,
+            self.found_whileloops,
+            self.found_forloops,
+            self.found_indentations
+        ]
+
     # Erhält als Parameter Liste mit allen Variablenwerten 
     # und entsprechendem SD und erstellt daraus eine matplotlib-Tabelle.
     def create_tracetable(self, varlist):
@@ -36,11 +43,11 @@ class CodeSmoker(object):
         # plt.show()
         pass
 
-    # Manipulation von py_file und anschließende Ausführung
+    # Manipulation von py_file.readlines() und anschließende Ausführung
     # mittels der exec(String)-Funktion.
     def smoke_code(self):
         exec_output = []
- 
+
         for lists in self.loops:
             for item in lists:
                 position = item[0]
@@ -57,14 +64,17 @@ class CodeSmoker(object):
 
                 counter = 0
                 for var in self.trace_vars:
-                    statement = "    " + var
-                    self.py_file.insert(ans + 1 + counter, statement)
+                    statement = "    " + str(var) + "_list.append(" + str(var) + ")"
+                    self.py_file.readlines().insert(ans + 1 + counter, statement)
                     
-                    # In jeder Liste n um 1 erhöhen!!!
+                    for thing in self.all_lists:
+                        for y in thing:
+                            for x in y:
+                                x[0] += 1
 
                     counter += 1
-                    # insert_statement = "    "
-                    # self.py_file.insert(position[0] + 1, )
+        
+        exec_output = exec(self.py_file)
 
         return exec_output
 
@@ -104,7 +114,7 @@ class CodeSmoker(object):
 
         # Es wird über Objekte aus Liste von Zeilen
         line_number = 1 # Für Zeilen angabe in found_listen
-        for line in engine.py_file:
+        for line in engine.py_file.readlines():
             searched_strings = line.find(searched_string)
 
             # Zeilennummer und Position (Tail, Head) wird in die entsprechende
@@ -125,7 +135,7 @@ class Engine(object):
     def import_python_file(self):
         try:
             # Datei wird als String in CigarTracer importiert
-            self.py_file = filedialog.askopenfile(parent=self.window, title="Pythondatei für den Trace auswählen...").readlines()
+            self.py_file = filedialog.askopenfile(parent=self.window, title="Pythondatei für den Trace auswählen...")
         except:
             self.error_handler()
 
