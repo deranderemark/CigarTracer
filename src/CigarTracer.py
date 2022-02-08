@@ -1,7 +1,6 @@
 # Tkinter für GUI
-import string
 import tkinter as tk
-from tkinter import Entry, ttk
+from tkinter import ttk
 from tkinter import filedialog
 
 # Matplotlib für Datenausgabe als Tabelle
